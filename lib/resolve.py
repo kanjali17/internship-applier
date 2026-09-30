@@ -305,6 +305,8 @@ def resolve(q, job):
         n = str(G.get("prior_internships_count", 0))
         return out("logistics", pick(opts, n) or n, "logistics.prior_internships_count", 0.8)
     if has(L, "18 years", "at least 18", "18 or older"): return out("logistics", pick(opts, "yes" if G.get("age_18_plus") else "no"), "logistics.age_18_plus")
+    if has(L, "may we contact", "okay to contact", "ok to contact", "can we contact"):
+        return out("logistics", None, "permission to contact an employer is the applicant's call", 0, "pause")
     if has(L, "current employer", "current company"):
         v = G.get("current_employer")
         return out("logistics", v or None, "logistics.current_employer", 1, "fill" if v else "skip")
