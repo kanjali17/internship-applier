@@ -1,0 +1,142 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Internship Autopilot: your search preferences.
+# Everything the pipeline decides about WHICH jobs to apply to lives here.
+# Facts about YOU (name, school, authorization, EEO answers) live in data/profile.json.
+# ─────────────────────────────────────────────────────────────────────────────
+
+[search]
+# Terms to keep. Matched against the listing's term field (case-insensitive).
+terms = ["Summer 2027"]
+# Also allow off-cycle co-ops (e.g. "Spring 2027")? They rank lower unless the company is tier 1.
+offcycle_terms = ["Spring 2027", "Winter 2027"]
+offcycle_only_top_tier = true
+# Skip listings whose degree list doesn't include this (Simplify lists degrees per posting).
+degree = "Bachelor's"
+# Ignore postings older than this many days.
+max_age_days = 30
+# Skip roles whose listed pay is below this (USD/hour). 0 = no floor.
+min_hourly_pay = 28
+# Title words that disqualify a posting outright (regex, case-insensitive).
+exclude_title = '''(?<![/\w])ms(?![/\w])|\b(phd|ph\.d|master'?s|mba|graduate student|hardware|mechanical|electrical|firmware|embedded|asic|rtl|sales|marketing|accounting|legal|nurse|clinical|supply chain|manufacturing|civil|chemical|new grad|full[- ]time|postdoc)\b'''
+# Countries/cities to exclude unless the listing also says US/remote-US.
+exclude_locations = '''\b(canada|toronto|vancouver|london|uk|india|singapore|germany)\b'''
+
+# ── Tracks ───────────────────────────────────────────────────────────────────
+# A track = a kind of role you want, the resume that goes with it, and how much you want it.
+# Higher weight ranks higher. Title regexes are case-insensitive. First match with the
+# highest weight wins. Add, remove or rename tracks freely; the name is used everywhere.
+[[tracks]]
+name = "ai_eng"
+label = "AI / ML engineering"
+weight = 50
+titles = '''\b(ai|ml|machine learning|llm|agents?|agentic|applied ai|genai|nlp|rag|applied scientist)\b'''
+resume = "resumes/resume_ai_eng.pdf"
+
+[[tracks]]
+name = "swe"
+label = "Software engineering"
+weight = 30
+titles = '''\b(software engineer\w*|swe|developer|full[- ]?stack|backend|frontend|platform engineer)\b'''
+resume = "resumes/resume_ai_eng.pdf"
+
+[[tracks]]
+name = "pm"
+label = "Product / program management"
+weight = 26
+titles = '''\b(product manag\w*|technical program\w*|tpm|apm)\b'''
+resume = "resumes/resume_pm.pdf"
+# PM titles stay PM even if the title also says "AI".
+sticky = true
+
+[[tracks]]
+name = "data"
+label = "Data science / engineering"
+weight = 24
+titles = '''\b(data scien\w*|data engineer\w*|analytics engineer\w*|decision scien\w*|product analyst)\b'''
+resume = "resumes/resume_data.pdf"
+
+# ── Company preferences ──────────────────────────────────────────────────────
+# Bonus points for companies you care about. Names are matched as whole words
+# in the company name. Add as many tiers as you like.
+[[company_tiers]]
+name = "dream"
+bonus = 18
+companies = ["anthropic", "openai", "scale ai", "perplexity", "cursor", "replit"]
+
+[[company_tiers]]
+name = "dev_tools"
+bonus = 15
+companies = ["figma", "databricks", "cloudflare", "vercel", "stripe", "datadog", "notion", "linear", "ramp"]
+
+[[company_tiers]]
+name = "consumer"
+bonus = 12
+companies = ["spotify", "duolingo", "airbnb", "discord", "pinterest", "roblox", "doordash"]
+
+[[company_tiers]]
+name = "big_tech"
+bonus = 8
+companies = ["google", "microsoft", "amazon", "meta", "apple", "nvidia"]
+
+# ── Locations ────────────────────────────────────────────────────────────────
+# First matching entry's bonus applies. Regexes match the listing's location text.
+[[locations]]
+bonus = 10
+match = '''\b(san francisco|sf|bay area|mountain view|palo alto|menlo park|san jose|sunnyvale|california|, ca\b)'''
+[[locations]]
+bonus = 8
+match = '''\b(new york|nyc|brooklyn)\b'''
+[[locations]]
+bonus = 7
+match = '''\b(austin)\b'''
+[[locations]]
+bonus = 5
+match = '''\b(remote)\b'''
+
+# ── Freshness ────────────────────────────────────────────────────────────────
+# Points by posting age. Newer postings get read first by recruiters.
+[freshness]
+days_3 = 12
+days_7 = 8
+days_14 = 4
+days_30 = 0
+older = -6
+
+# ── Caps ─────────────────────────────────────────────────────────────────────
+[caps]
+# At most this many applications per company per 30 days (your own rule).
+per_company_30d = 3
+# Company-specific limits some employers enforce. company = max active applications.
+company_limits = { tiktok = 2, bytedance = 2, coinbase = 3 }
+
+# ── Sources ──────────────────────────────────────────────────────────────────
+# Public GitHub job lists. `kind` tells discover.py how to parse them.
+[[sources]]
+name = "Simplify"
+kind = "simplify_listings_json"
+repo = "https://github.com/SimplifyJobs/Summer2027-Internships"
+dir = "ext/Summer2027-Internships"
+
+[[sources]]
+name = "Zapply"
+kind = "zapply_readme"
+repo = "https://github.com/zapplyjobs/Internships-2027"
+dir = "ext/Internships-2027"
+
+# ── Application sites ────────────────────────────────────────────────────────
+# Sites Claude may apply on without an account. Anything else (Workday, iCIMS,
+# Taleo, SuccessFactors) is queued for you to create an account first.
+[ats]
+no_account = ["greenhouse", "ashbyhq", "lever.co", "rippling", "workable", "jobvite"]
+needs_account = ["myworkdayjobs", "icims", "taleo", "successfactors", "oraclecloud", "smartrecruiters"]
+
+# ── Tracker ──────────────────────────────────────────────────────────────────
+[tracker]
+# Local tracker file (always kept). A Google Sheet can mirror it; see docs/SITE_NOTES.md.
+path = "data/tracker.xlsx"
+google_sheet_url = ""   # optional: paste your Sheet's URL
+statuses = [
+  "Not applied", "In progress", "Needs answer", "Submitted",
+  "Online assessment / coding exam", "Recorded interview", "Recruiter screen",
+  "Interview", "Offer", "Rejected", "Closed", "Excluded",
+]

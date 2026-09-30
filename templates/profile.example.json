@@ -1,0 +1,125 @@
+{
+  "_meta": {
+    "rule": "Every answer the pipeline gives must trace to a key in this file, data/stories.json, or something you said to Claude. If it can't, the field is UNKNOWN and the application pauses.",
+    "how_to_use": "Copy to data/profile.json (autopilot.py init does this), replace every value, delete keys you don't want used. Keys starting with _ are notes."
+  },
+  "identity": {
+    "first_name": "Jordan",
+    "last_name": "Rivera",
+    "full_name": "Jordan Rivera",
+    "preferred_name": "Jordan",
+    "email": "jordan.rivera@example.edu",
+    "phone": "(555) 555-0123",
+    "city": "Austin",
+    "state": "Texas",
+    "state_abbr": "TX",
+    "country": "United States",
+    "address_line1": "123 Example St",
+    "postal_code": "78701",
+    "_address_use": "Only filled when an address field is REQUIRED. Otherwise city/state only.",
+    "linkedin": "https://linkedin.com/in/your-handle/",
+    "github": "https://github.com/your-handle",
+    "portfolio": "https://github.com/your-handle",
+    "pronouns": "They/Them"
+  },
+  "education": {
+    "school": "The University of Texas at Austin",
+    "_school_aliases": "Other spellings dropdowns use. The first one found in a dropdown wins.",
+    "school_aliases": ["University of Texas - Austin", "University of Texas at Austin", "UT Austin"],
+    "_school_search_hint": "What to type in a school search box that needs a prefix.",
+    "school_search_hint": "University of Texas",
+    "degree": "Bachelor of Science",
+    "degree_options": ["Bachelor's Degree", "Bachelor's", "Bachelor"],
+    "major": "Computer Science",
+    "discipline_dropdown_order": ["Computer Science", "Data Science", "Statistics", "Other"],
+    "start": "2024-08",
+    "grad_year": 2027,
+    "grad_month": 5,
+    "_grad_rule": "If a form only has terms, the term is derived: month 1-5 = Spring, 6-8 = Summer, 9-12 = Fall.",
+    "gpa": "3.80",
+    "_gpa_scope": "Say what your GPA covers. If a form asks for something you can't answer truthfully (e.g. cumulative across schools), the pipeline pauses.",
+    "gpa_scope": "Cumulative, current school",
+    "class_standing": "Junior",
+    "coursework": ["Data Structures", "Algorithms", "Linear Algebra"]
+  },
+  "work_auth": {
+    "authorized_us": true,
+    "requires_sponsorship": false,
+    "us_citizen": true,
+    "us_person_export_control": true,
+    "security_clearance": "none",
+    "_authorization_basis_options": "Words to look for in 'basis of your work authorization' dropdowns, in order.",
+    "authorization_basis_options": ["nationality", "citizen"]
+  },
+  "logistics": {
+    "willing_to_relocate": true,
+    "onsite_ok": true,
+    "remote_ok": true,
+    "available_terms": ["Summer 2027"],
+    "location_preference_order": ["San Francisco", "Bay Area", "New York", "Austin", "Remote"],
+    "_how_did_you_hear": "Dropdown options to try, in order. The text value is used for free-text boxes.",
+    "how_did_you_hear_order": ["LinkedIn", "Job board", "Online", "Internet", "Other"],
+    "how_did_you_hear_text": "LinkedIn",
+    "previously_employed_by": [],
+    "prior_internships_count": 1,
+    "age_18_plus": true,
+    "current_employer": "",
+    "_current_title_by_track": "Optional: how your current/most recent title should read for each track in config/preferences.toml.",
+    "current_title_by_track": {},
+    "salary_rule": "If pay is listed, answer with the listed range. Otherwise: 'Flexible, in line with your intern pay band.'"
+  },
+  "eeo_voluntary": {
+    "_rule": "Each value is either a list of option labels to try in order, or one of: yes | no | decline. Use 'decline' for anything you'd rather not share. Never guessed.",
+    "gender": ["Decline"],
+    "race_ethnicity": ["decline"],
+    "hispanic_latino": "decline",
+    "veteran": "no",
+    "disability": "decline",
+    "sexual_orientation": "decline",
+    "transgender": "decline"
+  },
+  "consents": {
+    "_rule": "true = Claude may tick it. false = Claude pauses and asks you (or declines, for SMS / future-contact boxes).",
+    "privacy_notice_acknowledgement": true,
+    "certify_true_and_complete": true,
+    "ats_terms_of_service": true,
+    "ai_screening_notice": true,
+    "demographic_data_processing": true,
+    "background_check_acknowledgement": false,
+    "arbitration_agreement": false,
+    "data_retention_beyond_role": false,
+    "ai_interview_recording": false,
+    "sms_opt_in": false,
+    "future_opportunities_contact": false
+  },
+  "legal": {
+    "_rule": "Facts only you know. null = unknown, so the pipeline asks.",
+    "subject_to_noncompete": null,
+    "criminal_record_question": null
+  },
+  "experience": [
+    {
+      "id": "example_internship",
+      "company": "Example Co",
+      "title": "Software Engineering Intern",
+      "_title_by_track": "Optional per-track wording of the same title, only if truthful.",
+      "title_by_track": {},
+      "location": "Austin, TX",
+      "start": "2026-05",
+      "end": "2026-08",
+      "current": false
+    }
+  ],
+  "skills": {
+    "languages": ["Python", "TypeScript", "JavaScript"],
+    "frameworks": ["React", "Node.js"],
+    "ai": ["RAG pipelines", "LLM evals"],
+    "tools": ["Git", "Cursor"],
+    "_unverified": "Skills you have but don't want claimed in essays until you confirm them.",
+    "unverified": []
+  },
+  "product_usage": {
+    "_rule": "Products you actually use, and how. Essays only mention usage that's listed here.",
+    "Notion": "class notes and team project docs"
+  }
+}

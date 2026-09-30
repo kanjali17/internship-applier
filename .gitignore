@@ -1,0 +1,18 @@
+# Your personal data never leaves your machine
+data/*
+!data/.gitkeep
+resumes/*
+!resumes/README.md
+packets/*
+!packets/.gitkeep
+forms/*
+!forms/.gitkeep
+review-desk/drafts.json
+review-desk/grades*.json
+ext/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/

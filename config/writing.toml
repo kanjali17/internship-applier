@@ -1,0 +1,66 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Writing rules enforced by lib/lint.py on every essay before it can be submitted.
+# Tone and examples live in data/voice.md (yours to write). This file is the hard gate.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Block em dashes, en dashes and spaced hyphens used as punctuation.
+block_dashes = true
+# Max times the company may be named in one answer.
+max_company_mentions = 2
+# Require at least one term from the job description (passed as --jd-terms) in each answer.
+require_jd_term = true
+# Block "N years of experience" claims.
+block_years_claims = true
+# Numbers that are always fine (years, small counts). Any other number must appear
+# somewhere in data/stories.json or data/profile.json, or the answer is blocked.
+safe_numbers = ["2024", "2025", "2026", "2027", "2028", "1", "2", "3", "4", "5"]
+
+# Phrases that read as generic or AI-written. Matching is whole-word, case-insensitive.
+banned = [
+  "passionate", "leverage", "leveraging", "thrilled", "delve", "cutting-edge", "cutting edge",
+  "fast-paced", "synergy", "innovative solutions", "resonate", "resonates", "tapestry", "journey",
+  "i am writing to express", "great fit", "at the intersection of", "unwavering", "spearheaded",
+  "honed", "deeply", "excited to contribute", "dynamic environment", "invaluable", "testament",
+  "game-changer", "game changer", "in today's world", "ever-evolving", "embark", "elevate",
+  "seamless", "robust", "holistic", "furthermore", "moreover", "i'm confident that",
+  "align with your mission", "state-of-the-art", "revolutionize", "harness", "empower",
+]
+
+# Constructions that get a warning (regex, lowercase text).
+[[warn_patterns]]
+pattern = '''\bnot only\b.*\bbut also\b'''
+name = "'not only X but also Y' construction"
+[[warn_patterns]]
+pattern = '''\bit'?s not just\b.*\bit'?s\b'''
+name = "'it's not just X, it's Y' construction"
+[[warn_patterns]]
+pattern = '''\b(\w+), (\w+),? and (\w+) (?:systems|solutions|products|teams)\b'''
+name = "rule-of-three stack"
+
+# Tools/technologies that trigger a warning if named but NOT in your profile's skills.
+# (Fine when describing the company's stack; never claim experience you don't have.)
+suspect_tech = [
+  "kubernetes", "docker", "pytorch", "tensorflow", "spark", "airflow", "kafka", "golang", "rust",
+  "java", "scala", "aws", "gcp", "azure", "terraform", "sql", "snowflake", "dbt", "langchain",
+  "llamaindex", "hugging face", "fine-tun", "rlhf", "cuda", "next.js", "graphql", "postgres",
+  "redis", "tableau", "looker",
+]
+
+# JD words -> story tags, used to suggest which story fits an essay question.
+[tag_hints]
+agent = ["agents"]
+rag = ["rag"]
+retrieval = ["rag"]
+eval = ["evals"]
+benchmark = ["evals"]
+pipeline = ["data_pipelines"]
+"data quality" = ["data_quality"]
+consumer = ["consumer"]
+mobile = ["mobile"]
+experiment = ["data"]
+stakeholder = ["stakeholders"]
+customer = ["product"]
+research = ["research"]
+guardrail = ["guardrails"]
+safety = ["guardrails"]
+llm = ["agents", "rag"]

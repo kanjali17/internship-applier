@@ -1,0 +1,43 @@
+{
+  "_how_to_use": "Your real projects and experiences: the ONLY material essays may draw from. Write facts plainly, with real numbers. 'my_words' are phrases you'd actually say; they keep essays sounding like you. Only status 'confirmed' stories are used. 'keywords' are words that identify the story, so the linter can stop the same story appearing twice in one application and block unconfirmed ones.",
+  "stories": [
+    {
+      "id": "search_tool",
+      "title": "Internship: document search tool",
+      "status": "confirmed",
+      "tags": ["ai_eng", "rag", "evals", "data_pipelines", "typescript"],
+      "keywords": ["search tool", "document search", "40-question"],
+      "facts": [
+        "Built a tool that turns a team's PDFs and slide decks into searchable text for an internal chatbot",
+        "Stack: TypeScript, Node.js, a vector database",
+        "Wrote a 40-question benchmark; the tool answered 30 correctly vs 18 for the old keyword search"
+      ],
+      "hardest_part": "Cleaning the source documents before any AI work: half of them were scanned images.",
+      "my_words": ["most of the quality came from cleaning the documents, not the model"],
+      "lesson": "Retrieval quality is mostly data quality.",
+      "do_not_claim": ["that it is used company-wide"],
+      "use_for": ["most technical project", "why AI engineering", "data quality"]
+    },
+    {
+      "id": "club_app",
+      "title": "Student club event app",
+      "status": "confirmed",
+      "tags": ["product", "mobile", "consumer", "pm", "teamwork"],
+      "keywords": ["club app", "rsvp"],
+      "facts": [
+        "Led a team of 4 building a React Native app for club events with RSVPs and reminders",
+        "Grew to 300 weekly users across 6 clubs in one semester"
+      ],
+      "my_words": ["I kept asking people what made them skip events"],
+      "use_for": ["product sense", "leadership", "something you built"]
+    },
+    {
+      "id": "unconfirmed_example",
+      "title": "A project you haven't confirmed details for yet",
+      "status": "excluded",
+      "tags": ["side_project"],
+      "keywords": ["weather bot"],
+      "facts": ["Placeholder: essays will never use this until status is 'confirmed'"]
+    }
+  ]
+}
