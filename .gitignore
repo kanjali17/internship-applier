@@ -1,4 +1,5 @@
 # Your personal data never leaves your machine
+config/*.local.toml
 data/*
 !data/.gitkeep
 resumes/*

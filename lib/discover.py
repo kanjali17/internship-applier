@@ -84,9 +84,11 @@ def score(x, age_days):
     if not re.search(r"intern|co-?op", tl):
         s -= 15
     tier_hit = False
-    for tier in P.get("company_tiers", []):
+    tiers = P.get("company_tiers", [])
+    top = S.get("offcycle_tiers") or ([tiers[0]["name"]] if tiers else [])
+    for tier in tiers:
         if any(re.search(r"(?<![a-z])" + re.escape(c) + r"(?![a-z])", cl) for c in tier["companies"]):
-            s += tier["bonus"]; tier_hit = tier is P["company_tiers"][0]; break
+            s += tier["bonus"]; tier_hit = tier["name"] in top; break
     off = [t.lower() for t in S.get("offcycle_terms", [])]
     if x.get("term") and not any(t.lower() in x["term"].lower() for t in S["terms"] + S.get("offcycle_terms", [])):
         return None, None, "term not wanted"

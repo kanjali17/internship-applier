@@ -94,6 +94,9 @@ You can also just approve in chat ("both are fine, submit").
   SimplifyJobs-format repo, and `zapply_readme` for Zapply-format READMEs. New formats go in
   `PARSERS` in `lib/discover.py`.
 - **Stricter or looser writing rules:** edit `config/writing.toml`.
+- **Keep your settings private:** copy `config/preferences.toml` to `config/preferences.local.toml`
+  (git-ignored) and edit that instead. When it exists it replaces the shared file, so you can pull
+  updates without conflicts. Same for `writing.local.toml`.
 - **What Claude may agree to:** `data/profile.json > consents`.
 - **Tracker columns or statuses:** `[tracker]` in preferences. For a Google Sheet mirror, paste its
   URL into `google_sheet_url` and see the Sheets notes in `docs/SITE_NOTES.md`.

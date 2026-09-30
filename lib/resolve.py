@@ -171,7 +171,10 @@ def resolve(q, job):
         return out("identity", a, "identity.pronouns", 1 if a else 0, "fill" if a else "skip")
     if has(L, "resume", "cv") and t == "file": return out("file", job.get("resume_file"), "track resume", 1, "upload")
     if has(L, "cover letter"): return out("file", None, "optional; skipped unless required", 1, "draft" if q.get("required") else "skip")
-    if has(L, "transcript"): return out("file", None, "transcript: ask for the file if required", 0, "pause" if q.get("required") else "skip")
+    if has(L, "transcript"):
+        f = P.get("files", {}).get("transcript")
+        if f: return out("file", f, "files.transcript", 1, "upload" if q.get("required") else "skip")
+        return out("file", None, "transcript: ask for the file if required", 0, "pause" if q.get("required") else "skip")
 
     # 3. EEO (voluntary): values are lists of labels to try, or yes/no/decline
     def eeo(key, specific_no=()):
@@ -185,6 +188,7 @@ def resolve(q, job):
             a = pick(opts, v) if opts else None
         return out("eeo", a, f"eeo_voluntary.{key}", 1 if a else 0, "fill" if a else "skip")
     if has(L, "transgender"): return eeo("transgender")
+    if "lgbt" in ll: return eeo("lgbtqia")
     if has(L, "sexual orientation"): return eeo("sexual_orientation")
     if has(L, "gender", "sex") and not has(L, "orientation"): return eeo("gender")
     if has(L, "hispanic", "latino", "latinx"): return eeo("hispanic_latino")
@@ -262,7 +266,7 @@ def resolve(q, job):
     if opts and has(L, "which term", "which session", "term works", "internship term"):
         a = pick_any(opts, G.get("available_terms", []))
         return out("logistics", a, "logistics.available_terms", 0.95 if a else 0, "fill" if a else "pause")
-    if has(L, "location preference", "preferred location", "preferred office", "which office", "which location"):
+    if has(L, "location preference", "preferred location", "preferred office", "which office", "which location", "hub", "prefer to work"):
         if opts:
             a = pick_any(opts, G.get("location_preference_order", []))
             if a: return out("logistics", a, "logistics.location_preference_order", 0.9)
@@ -274,7 +278,10 @@ def resolve(q, job):
     if opts and has(L, "countries", "based in", "which country", "country of residence"):
         a = pick(opts, I["country"])
         return out("logistics", a, "identity.country", 1 if a else 0, "fill" if a else "pause")
-    if has(L, "current location", "where are you located", "city"): return out("logistics", f"{I['city']}, {I['state_abbr']}", "identity.city")
+    if has(L, "when can you start", "start date", "earliest start", "available to start"):
+        v = G.get("start_availability")
+        return out("logistics", v, "logistics.start_availability", 0.9, "fill" if v else "pause")
+    if has(L, "current location", "where are you located", "city") or ll.strip() == "location": return out("logistics", f"{I['city']}, {I['state_abbr']}", "identity.city")
     if has(L, "address"):
         return out("logistics", I.get("address_line1") if q.get("required") else None, "identity.address (only when required)", 1, "fill" if q.get("required") else "skip")
     if has(L, "zip", "postal"): return out("logistics", I["postal_code"], "identity.postal_code")
@@ -283,13 +290,15 @@ def resolve(q, job):
     if has(L, "salary", "compensation", "pay expectation", "hourly rate", "expected pay", "desired pay"):
         pay = job.get("pay")
         return out("logistics", f"{pay}, as listed in the posting" if pay else "Flexible, in line with your intern pay band", "logistics.salary_rule", 0.8)
-    if has(L, "how did you hear", "how did you find", "how did you learn", "where did you first hear", "source"):
+    if has(L, "how did you hear", "how did you find", "how did you learn", "how did you connect", "where did you first hear", "source"):
         a = pick_any(opts, G.get("how_did_you_hear_order", [])) if opts else G.get("how_did_you_hear_text")
         return out("logistics", a, "logistics.how_did_you_hear", 0.8 if a else 0, "fill" if a else "pause")
     if has(L, "referred", "referral", "know anyone", "relatives", "family members"): return out("logistics", pick(opts, "no") or "No", "no referral / relatives on file")
     if has(L, "previously worked", "worked for", "employed by", "former employee", "previously employed", "worked at"):
         prev = (job.get("company") or "").lower() in [c.lower() for c in G.get("previously_employed_by", [])]
         return out("logistics", pick(opts, "yes" if prev else "no"), "logistics.previously_employed_by")
+    if has(L, "list all employers", "all previous employers", "complete employment history", "all employers"):
+        return out("logistics", None, "full employment history requested; check profile.excluded_history with the applicant", 0, "pause")
     if has(L, "previously applied", "applied before"):
         return out("logistics", None, "check the tracker, then answer", 0, "pause")
     if has(L, "prior internship", "number of internships", "previous internships"):

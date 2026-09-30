@@ -66,6 +66,7 @@
     "current_employer": "",
     "_current_title_by_track": "Optional: how your current/most recent title should read for each track in config/preferences.toml.",
     "current_title_by_track": {},
+    "start_availability": "May 2027 for summer roles",
     "salary_rule": "If pay is listed, answer with the listed range. Otherwise: 'Flexible, in line with your intern pay band.'"
   },
   "eeo_voluntary": {
@@ -76,7 +77,8 @@
     "veteran": "no",
     "disability": "decline",
     "sexual_orientation": "decline",
-    "transgender": "decline"
+    "transgender": "decline",
+    "lgbtqia": "decline"
   },
   "consents": {
     "_rule": "true = Claude may tick it. false = Claude pauses and asks you (or declines, for SMS / future-contact boxes).",
@@ -91,6 +93,13 @@
     "ai_interview_recording": false,
     "sms_opt_in": false,
     "future_opportunities_contact": false
+  },
+  "files": {
+    "_rule": "Paths (inside the repo) to files a form may ask for. Empty = Claude asks you.",
+    "transcript": ""
+  },
+  "excluded_history": {
+    "_rule": "Jobs you've chosen to leave off applications. Claude never mentions them unless a form legally requires every employer, and then it asks you first."
   },
   "legal": {
     "_rule": "Facts only you know. null = unknown, so the pipeline asks.",

@@ -6,22 +6,29 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 class SetupError(SystemExit):
     pass
 
+# AUTOPILOT_EXAMPLE=1 runs everything against the example templates (used by the tests).
+EXAMPLE = os.environ.get("AUTOPILOT_EXAMPLE") == "1"
+
 def _need(path, hint):
     p = ROOT / path
     if not p.exists():
         raise SetupError(f"Missing {path}. {hint}")
     return p
 
+def _toml(name):
+    """config/<name>.local.toml (git-ignored, yours) wins over the shared config/<name>.toml."""
+    local = ROOT / f"config/{name}.local.toml"
+    if local.exists() and not EXAMPLE:
+        return tomllib.loads(local.read_text())
+    return tomllib.loads(_need(f"config/{name}.toml", "It ships with the repo; restore it from git.").read_text())
+
 @functools.lru_cache(None)
 def prefs():
-    return tomllib.loads(_need("config/preferences.toml", "It ships with the repo; restore it from git.").read_text())
+    return _toml("preferences")
 
 @functools.lru_cache(None)
 def writing():
-    return tomllib.loads(_need("config/writing.toml", "It ships with the repo; restore it from git.").read_text())
-
-# AUTOPILOT_EXAMPLE=1 runs everything against the example templates (used by the tests).
-EXAMPLE = os.environ.get("AUTOPILOT_EXAMPLE") == "1"
+    return _toml("writing")
 
 @functools.lru_cache(None)
 def profile():

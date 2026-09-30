@@ -10,6 +10,8 @@ terms = ["Summer 2027"]
 # Also allow off-cycle co-ops (e.g. "Spring 2027")? They rank lower unless the company is tier 1.
 offcycle_terms = ["Spring 2027", "Winter 2027"]
 offcycle_only_top_tier = true
+# Which company tiers count as "top" for off-cycle roles. Empty = the first tier listed below.
+offcycle_tiers = []
 # Skip listings whose degree list doesn't include this (Simplify lists degrees per posting).
 degree = "Bachelor's"
 # Ignore postings older than this many days.

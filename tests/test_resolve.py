@@ -53,3 +53,7 @@ def test_noncompete_unknown_pauses():
 def test_gpa_range_option():
     a = r("GPA", "select", ["4.0", "3.5 - 3.9", "3.0 - 3.4"])
     assert a["answer"] == "3.5 - 3.9"
+
+def test_lgbtq_uses_profile():
+    a = r("Do you identify as LGBTQIA+?", "select", ["Yes", "No", "I prefer not to answer"], required=False)
+    assert a["answer"] == "I prefer not to answer"
