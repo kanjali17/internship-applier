@@ -55,6 +55,11 @@ discover -> check duplicates -> read posting -> read live form -> packet (answer
    them in `review-desk/index.html` and send back `grades.json` (`review import`). If the applicant
    prefers, they can approve in chat instead; record that by setting `"review": "approved"` on
    the answer. **No essay is submitted without approval.** A rewrite note means redraft and resubmit.
+   If the applicant uses a live (hosted) review desk, close the loop on every grade you act on so
+   they know when to re-check: record `handledAt` and a one-line `claudeNote` on the answer
+   ("Rewrote per your note: ...", "Approved, submits next run", "Submitted, confirmation ..."),
+   bump `revision` and set `revisedAt` on a rewrite, and lead your report with "all caught up" or
+   "N rewrites ready for you".
 8. **Fill, read back, submit** (Chrome). Only type what a READY packet says. After filling, read
    every field's value back from the page and fix mismatches. Answer conditional questions that
    appear after earlier answers (they go through the resolver too). Upload the track's resume.
