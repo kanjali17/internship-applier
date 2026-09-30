@@ -18,3 +18,8 @@ def test_requires_jd_term():
 
 def test_blocks_years_claims():
     assert status(lint("I have 3 years of Python experience.")) == "BLOCK"
+
+def test_colons_warn_by_default_but_ignore_times_and_urls():
+    iss = lint("Here is the thing: I built a search tool.")
+    assert any("colon" in m for _, m in iss)
+    assert not any("colon" in m for _, m in lint("I start at 9:30 and my repo is https://github.com/x"))

@@ -25,6 +25,11 @@ def lint(text, company=None, jd_terms=None, max_sentences=None, min_sentences=No
     issues, low = [], text.lower()
     if W.get("block_dashes", True) and ("—" in text or re.search(r"\s–\s", text) or " -- " in text or re.search(r"\w - \w", text)):
         issues.append(("BLOCK", "dash used as punctuation (em/en dash or spaced hyphen)"))
+    mode = W.get("colons", "off")
+    if mode != "off":
+        bare = re.sub(r"https?://\S+|\d:\d", "", text)
+        if ":" in bare:
+            issues.append(("BLOCK" if mode == "block" else "WARN", "colon used in an essay; rewrite as two sentences or with a comma"))
     for b in W.get("banned", []):
         if re.search(r"(?<![\w-])" + re.escape(b) + r"(?![\w-])", low):
             issues.append(("BLOCK", f"banned phrase: '{b}'"))

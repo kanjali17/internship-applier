@@ -5,6 +5,8 @@
 
 # Block em dashes, en dashes and spaced hyphens used as punctuation.
 block_dashes = true
+# Colons in essays: "off", "warn" or "block". Times (9:30), ratios (3:1) and URLs are ignored.
+colons = "warn"
 # Max times the company may be named in one answer.
 max_company_mentions = 2
 # Require at least one term from the job description (passed as --jd-terms) in each answer.
