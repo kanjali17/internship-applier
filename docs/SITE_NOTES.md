@@ -64,3 +64,6 @@ registered by the page's code.
 
 ## Learned in use
 (Claude appends new quirks here after each session.)
+- 2026-10-02 Waymo careers site (careers.withwaymo.com, embedded Greenhouse): native selects, set by value works. After submit the form is replaced by a small "Thank you" under "Ready to Apply?" with no confirmation page. Waymo caps applicants at 5 applications per 60 days.
+- 2026-10-02 Greenhouse react-select menus that open below the viewport: click the field, type the option text, wait 1s, press Enter. Attentive's EEO block needs its demographic-consent checkbox checked (click via find ref; coordinate clicks missed it).
+- 2026-10-02 Greenhouse boards-api is not reachable from the cloud shell or page fetch (CORS); read the live form from the page instead.
