@@ -64,3 +64,5 @@ registered by the page's code.
 
 ## Learned in use
 (Claude appends new quirks here after each session.)
+- 2026-10-09: The cloud sandbox's egress blocks `boards-api.greenhouse.io` and `api.lever.co`. Open the API URL in a Chrome tab and read it there (`JSON.parse(document.body.innerText)`). Output containing raw query-string URLs can be blocked by the tool, so strip URLs before returning text.
+- 2026-10-09: Google Sheets, a single key sequence "Return cmd+c Down cmd+v" after the Name box does not move the selection. Click the target cell directly, then paste. Local tracker.xlsx can lag the Sheet, so check the Sheet CSV for duplicates too.
