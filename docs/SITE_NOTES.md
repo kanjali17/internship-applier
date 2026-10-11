@@ -64,3 +64,8 @@ registered by the page's code.
 
 ## Learned in use
 (Claude appends new quirks here after each session.)
+- Workday: the first "Save and Continue" click after editing a text field often only blurs the field; click again and re-read the step indicator. Dropdown buttons work reliably with click, read `[role=option]`, then ArrowDown N + Enter, then read the button text back.
+- Workday "How did you hear" prompts with nested categories: typing + Enter auto-picks the first match (e.g. "LinkedIn Connection Post"); browse the category list with the mouse wheel inside the list instead.
+- Workday LinkedIn field rejects `linkedin.com/in/x/`; use `https://www.linkedin.com/in/x`.
+- EA careers (Avature): the EEO step may silently advance to the screening-questions step while the title stays the same; check the step list. School and country fields are select2 typeaheads.
+- Google Sheet mirror: always read the tail of the sheet right before writing. Other runs append rows too, so a remembered "next free row" can overwrite their rows.
