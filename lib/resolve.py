@@ -228,7 +228,7 @@ def resolve(q, job):
         return out("edu", pick(opts, "yes" if ans else "no"), f"education.grad {month_year} vs {cutoff}", 0.95)
     if has(L, "graduation", "grad date", "expected graduation", "graduate", "graduation year") and not has(L, "before", "after"):
         if opts:
-            a = pick_any(opts, [month_year, term]) or next((o for o in opts if str(gy) in o and re.search(MONTHS[gm - 1][:3], o.lower())), None) \
+            a = pick_any(opts, [month_year, term] + ([f"Winter {gy}", f"Fall/Winter {gy}"] if gm >= 11 else [])) or next((o for o in opts if str(gy) in o and re.search(MONTHS[gm - 1][:3], o.lower())), None) \
                 or next((o for o in opts if re.search(rf"{gy}\s*(&|and)?\s*(later|after)", o.lower())), None) or pick(opts, str(gy))
             return out("edu", a, "education.grad_year/grad_month", 0.9 if a else 0, "fill" if a else "pause")
         return out("edu", month_year, "education.grad_year/grad_month")
