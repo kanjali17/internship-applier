@@ -64,3 +64,6 @@ registered by the page's code.
 
 ## Learned in use
 (Claude appends new quirks here after each session.)
+- 2026-10-23 Ashby (RV Tech): a checkbox-group "Yes" can show checked in the DOM yet fail with "Missing entry"; click the "Yes" label text (not the box) off and on, zoom to confirm, then resubmit.
+- 2026-10-23 Greenhouse (MEMX): emailed security code appears only after clicking Submit; log Needs answer.
+- 2026-10-23 Lever (Pattern): both intern forms require "What is your cumulative GPA?" dropdown; resolver now pauses on it.

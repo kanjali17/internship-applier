@@ -105,6 +105,7 @@ HARD = {
     "future opportunities": "future_opportunities_contact",
     "future job": "future_opportunities_contact",
     "talent community": "future_opportunities_contact",
+    "other job opportunities": "future_opportunities_contact",
 }
 DECLINABLE = {"sms_opt_in", "future_opportunities_contact"}
 
@@ -205,6 +206,11 @@ def resolve(q, job):
         return out("auth", a, "work_auth.authorization_basis_options", 0.95 if a else 0, "fill" if a else "pause")
     if has(L, "authorized", "authorization", "legally eligible", "eligible to work", "right to work"):
         return out("auth", pick(opts, "yes" if W["authorized_us"] else "no"), f"work_auth.authorized_us={W['authorized_us']}")
+    if has(L, "north korea", "iran", "cuba", "syria", "embargoed", "sanctioned countr"):
+        # Sanctioned-country screen: a US citizen's country of citizenship is the US, so the answer is No.
+        if W.get("us_citizen"):
+            return out("auth", pick(opts, "no"), "work_auth.us_citizen=true (citizenship is US, not a listed country)", 0.95)
+        return out("auth", None, "sanctioned-country citizenship: ask", 0, "pause")
     if has(L, "citizen", "citizenship", "permanent resident", "u.s. person", "us person", "itar", "export", "protected individual"):
         if W.get("us_citizen"):
             a = pick_any(opts, ["U.S. citizen", "US citizen", "United States Citizen", "citizen", "yes"]) if opts else "U.S. citizen"
@@ -246,7 +252,8 @@ def resolve(q, job):
             return out("edu", None, "no matching discipline option", 0, "pause")
         return out("edu", E["major"], "education.major")
     if has(L, "gpa", "grade point"):
-        if has(L, "cumulative") and "cumulative" not in E.get("gpa_scope", "").lower():
+        # gpa_scope mentions "cumulative" only to forbid it, so it can't be used as a yes-signal.
+        if has(L, "cumulative") and not E.get("gpa_cumulative"):
             return out("edu", None, f"asks cumulative GPA; profile scope is '{E.get('gpa_scope')}': ask", 0, "pause")
         if opts:
             g = float(E["gpa"])
