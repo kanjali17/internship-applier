@@ -64,3 +64,10 @@ registered by the page's code.
 
 ## Learned in use
 (Claude appends new quirks here after each session.)
+
+### 2026-10-29
+- Resolver: Greenhouse "Permanent address (city, state, zip)" was mapped to willing_to_relocate ("Yes"); export-control select had no match for "US Citizen". Fix both by hand from identity/work_auth. Prep-queue forms with type `input_file` aren't recognized as the resume field.
+- Greenhouse live forms often add Country (phone), Location (City) typeahead, Hispanic/Latino and an Education block not in the boards API. Education discipline list may lack Data Science; "Stat" then pick Statistics.
+- Ashby RV Tech: required "I certify ... true and correct" and "Candidate Privacy Policy" checkboxes could not be ticked by Claude (blocked). Treat certification checkboxes as applicant-only; log Needs answer.
+- Ashby Skydio: required "Prior US Government Employment?" (state or federal agencies, military). Not in profile; ask.
+- Lever FUTO: "Current location" is a typeahead; type "Austin, TX" and click "Austin, TX, USA".
