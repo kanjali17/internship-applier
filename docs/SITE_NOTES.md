@@ -64,3 +64,7 @@ registered by the page's code.
 
 ## Learned in use
 (Claude appends new quirks here after each session.)
+- 2026-10-30 Rippling: `read_page` is blocked on ats.rippling.com, but find/JS/screenshots work. The form scrolls inside a container, so use mouse-wheel scroll, not scrollIntoView. Radios register only on a real click. After setting a textarea by script, type a space and Backspace so React picks up the value.
+- 2026-10-30 Greenhouse: boards-api.greenhouse.io is blocked from both the cloud shell and the embed page fetch; read the form from the embed page DOM instead.
+- 2026-10-30 Greenhouse react-select: Cmd/Ctrl+A does not clear the search text; press BackSpace repeatedly.
+- 2026-10-30 applytojob (JazzHR): closed postings show "This position is no longer available". Check before drafting.
