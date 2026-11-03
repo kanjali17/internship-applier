@@ -57,3 +57,9 @@ def test_gpa_range_option():
 def test_lgbtq_uses_profile():
     a = r("Do you identify as LGBTQIA+?", "select", ["Yes", "No", "I prefer not to answer"], required=False)
     assert a["answer"] == "I prefer not to answer"
+
+def test_visa_in_authorization_question_is_not_sponsorship():
+    a = r("Are you currently authorized to work in the United States, either as a U.S. citizen, permanent resident, or on a transferable TN visa?", "select", ["Yes", "No"])
+    assert a["source"].startswith("work_auth.authorized_us") and a["answer"] == "Yes"
+    b = r("Will you now or in the future require visa support to work in the US?", "select", ["Yes", "No"])
+    assert b["source"].startswith("work_auth.requires_sponsorship")

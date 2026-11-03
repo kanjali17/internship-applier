@@ -65,5 +65,5 @@ registered by the page's code.
 ## Learned in use
 (Claude appends new quirks here after each session.)
 - 2026-11-03 Ashby (Astro Mechanica): Yes/No buttons registered on first coordinate click; check via `_active_` class on `.ashby-application-form-input-yesno-option`. Success text "Your application was successfully submitted" appears on the same /application URL.
-- 2026-11-03 Resolver: "Are you currently authorized to work ... or on a transferable TN visa?" matched the sponsorship rule because of the word "visa" and resolved to "No". Corrected by hand to Yes. Check work-auth answers whose label mentions both "authorized" and "visa".
-- 2026-11-03 `autopilot.py track` matches existing rows by company + loose title, and overwrote an older Excluded KnowBe4 Spring row and the Submitted Schonfeld row. Both restored. Compare the link before letting it update.
+- 2026-11-03 Resolver: "Are you currently authorized to work ... or on a transferable TN visa?" matched the sponsorship rule because of the word "visa" and resolved to "No". Corrected by hand to Yes. Fixed in lib/resolve.py: "visa" counts as sponsorship only with "require"/"need".
+- 2026-11-03 `autopilot.py track` matches existing rows by company + loose title, and overwrote an older Excluded KnowBe4 Spring row and the Submitted Schonfeld row. Both restored. Fixed in lib/tracker.py: a row with a different link is a new row, and a Submitted-or-later row is never downgraded.

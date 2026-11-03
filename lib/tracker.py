@@ -7,6 +7,10 @@ import datetime, re, sys, pathlib
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from config import ROOT, prefs, statuses
 
+PRE_SUBMIT = {"Not applied", "In progress", "Needs answer", "Excluded"}
+SUBMITTED_OR_LATER = {"Submitted", "Online assessment / coding exam", "Recorded interview", "Recruiter screen",
+                      "Interview", "Offer", "Rejected", "Closed"}
+
 HEAD = ["Status", "Company", "Role", "Term", "Date", "Resume used", "Listed pay", "Track", "Notes and evidence", "Link / confirmation"]
 
 
@@ -42,16 +46,28 @@ def rows():
     return [dict(zip(HEAD, r), _row=i) for i, r in enumerate(ws.iter_rows(min_row=2, values_only=True), start=2) if r[1]]
 
 
-def find(company, role):
+def same_link(a, b):
+    """Two links point at the same posting. Empty on either side means unknown, so they match."""
+    clean = lambda u: re.sub(r"[?#].*$", "", (u or "").strip().lower()).rstrip("/")
+    return not clean(a) or not clean(b) or clean(a) == clean(b)
+
+
+def find(company, role, link=""):
+    """Existing row for this company + role. A row whose link names a different posting is a
+    different application (e.g. a Spring role vs the Summer role with the same title), not a match."""
     c, n = company.lower().strip(), norm(role)
-    return next((r for r in rows() if (r["Company"] or "").lower().strip() == c and norm(r["Role"]) == n), None)
+    return next((r for r in rows() if (r["Company"] or "").lower().strip() == c and norm(r["Role"]) == n
+                 and same_link(r["Link / confirmation"], link)), None)
 
 
 def upsert(status, company, role, term="", resume="", pay="", track="", note="", link="", date=None):
     if status not in statuses():
         raise SystemExit(f"Unknown status '{status}'. Use one of: {', '.join(statuses())}")
     wb = open_book(); ws = wb.active
-    hit = find(company, role)
+    hit = find(company, role, link)
+    if hit and hit["Status"] in SUBMITTED_OR_LATER and status in PRE_SUBMIT:
+        raise SystemExit(f"Row {hit['_row']} ({company} / {hit['Role']}) is already '{hit['Status']}'. "
+                         f"Not changing it to '{status}'. If this is a different posting, pass its --link.")
     r = hit["_row"] if hit else ws.max_row + 1
     date = date or datetime.date.today().isoformat()
     old_note = ws.cell(r, 9).value if hit else ""

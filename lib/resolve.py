@@ -197,7 +197,9 @@ def resolve(q, job):
     if has(L, "disability"): return eeo("disability", ["No, I do not have a disability"])
 
     # 4. work authorization: sponsorship BEFORE authorization BEFORE citizenship
-    if has(L, "sponsor", "sponsorship", "h-1b", "h1b", "visa"):
+    # "visa" alone is not a sponsorship question: "authorized to work as a citizen, resident or on a
+    # TN visa?" asks about authorization. Treat it as sponsorship only with "require"/"need".
+    if has(L, "sponsor", "sponsorship", "h-1b", "h1b") or (has(L, "visa") and has(L, "require", "requires", "need", "needs")):
         return out("auth", pick(opts, "yes" if W["requires_sponsorship"] else "no"), f"work_auth.requires_sponsorship={W['requires_sponsorship']}")
     if has(L, "basis of your work authorization", "describes your work authorization", "your authorization to work") or \
             (opts and any("nationality" in o.lower() or "work permit" in o.lower() for o in opts)):
