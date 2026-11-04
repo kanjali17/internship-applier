@@ -49,7 +49,11 @@ def rows():
 def same_link(a, b):
     """Two links point at the same posting. Empty on either side means unknown, so they match."""
     clean = lambda u: re.sub(r"[?#].*$", "", (u or "").strip().lower()).rstrip("/")
-    return not clean(a) or not clean(b) or clean(a) == clean(b)
+    if not clean(a) or not clean(b) or clean(a) == clean(b):
+        return True
+    # Same ATS job id on a different host or path (boards. vs job-boards., /confirmation, embed?token=)
+    ids = lambda u: set(re.findall(r"\d{6,}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", (u or "").lower()))
+    return bool(ids(a) & ids(b))
 
 
 def find(company, role, link=""):

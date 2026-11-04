@@ -26,3 +26,9 @@ def test_never_downgrades_submitted():
         assert False, "should refuse"
     except SystemExit as e:
         assert "already 'Submitted'" in str(e)
+
+def test_same_job_id_on_other_host_updates_row():
+    _tmp()
+    r1, _ = tracker.upsert("Needs answer", "Acme", "TPM Intern", link="https://boards.greenhouse.io/acme/jobs/5268864007")
+    r2, updated = tracker.upsert("Submitted", "Acme", "TPM Intern", link="https://job-boards.greenhouse.io/acme/jobs/5268864007")
+    assert r2 == r1 and updated
