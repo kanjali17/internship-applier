@@ -64,3 +64,7 @@ registered by the page's code.
 
 ## Learned in use
 (Claude appends new quirks here after each session.)
+- (2026-11-06) Ashby (jobs.ashbyhq.com): get_page_text may be denied by the extension, but read_page / find / screenshot work. Location is an autocomplete combobox: type "Austin, Texas", wait ~2s, click the "Austin, Texas, United States" option. Submit shows a green "Success" banner in place.
+- (2026-11-06) Greenhouse forms whose API has `"education":"education_required"` show an Education block (School/Degree/Discipline/start+end month/year) that is NOT in the `questions` list; add it to the form file. If typing into a react-select leaves stale text, clear it with the native value setter + input event before typing.
+- (2026-11-06) PayPal Eightfold apply page loads without login; it asks for a close-friendship-with-employee declaration and a PayPal NDA acknowledgement (both pause).
+- (2026-11-06) `autopilot.py track` dedupes on exact title; check the tracker by company + URL before opening a form (Nex and ParetoHealth were already tracked under slightly different titles).
