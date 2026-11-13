@@ -64,3 +64,6 @@ registered by the page's code.
 
 ## Learned in use
 (Claude appends new quirks here after each session.)
+- 2026-11-13: Greenhouse "permanent address (city, state, zip)" questions mentioning relocation get resolved to "Yes" (willing_to_relocate). Override in the packet with "Austin, TX 78705" from identity. Export-control selects with "US Citizen" need a manual override too (resolver returned no option).
+- 2026-11-13: `autopilot.py lint --jd` splits terms on commas, not semicolons.
+- 2026-11-13: Duplicate check by company name misses Tinder roles (tracker logs them as "Match Group"). Check both names.
