@@ -64,3 +64,6 @@ registered by the page's code.
 
 ## Learned in use
 (Claude appends new quirks here after each session.)
+- Rippling (Bound, 2026-11-21): "Were you referred" and "Date available to start" show as optional on the page but are required at submit; Race/Hispanic dropdowns only appear after Gender is chosen. Check for "This field is required" after the first Apply click.
+- Greenhouse (Octaura, 2026-11-21): Discipline list had no Data Science/Statistics/Data Processing (only "Statistics & Decision Theory"); followed discipline_dropdown_order to Computer Science. Name box shortcut keys on the Mac are cmd, not ctrl.
+- Google Sheet: the inbox sync can add a bare "Submitted" row from a confirmation email minutes after submit; update that row instead of adding a duplicate.
