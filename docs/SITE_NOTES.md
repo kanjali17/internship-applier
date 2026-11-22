@@ -75,3 +75,9 @@ registered by the page's code.
 - UKG/UltiPro, Avature, and `careers.<company>.com/jobs/<n>` sites (iCIMS behind them) all require an account.
 - Google Sheet mirror: write notes by appending to the existing cell, never replacing it. Older notes hold role research. A revision can be recovered from the sheet tab with `fetch('/spreadsheets/d/<id>/export?format=csv&gid=<gid>&revision=<rev>')` (revision ids from Drive `list_file_revisions`).
 - Duplicates: before applying, re-read the live Sheet row (status AND notes), not a queue or list cached earlier in the session. An earlier run the same day may already have submitted it.
+
+### Learned in use (2026-11-22)
+- **SmartRecruiters** (jobs.smartrecruiters.com): "I'm interested" opens oneclick-ui Easy Apply with **no account**. Older tracker notes saying "Needs account (SmartRecruiters)" were wrong. The form lives in shadow DOM, so `find` can't see the resume file input: add a temporary light-DOM `<input type=file>`, upload to it, then copy `files` into `spl-dropzone-file-input-1` with a DataTransfer and dispatch `change` (composed). Comboboxes: click, ArrowDown, then click the option (typing a search often returns "No matches"). Screening page has the privacy checkbox at the bottom. Check for "Sorry, this job has expired" first.
+- **NBCUniversal** (SmartRecruiters) requires a cover letter + transcript, so it needs an approved letter.
+- **Rippling** (ats.rippling.com): Likert-style Yes/No buttons; Location must be picked from the autocomplete; confirmation step URL `step=confirmation`.
+- **Lever (Palantir)**: an informational card with an empty fields list is not a missing answer.
