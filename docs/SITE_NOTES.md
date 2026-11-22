@@ -71,3 +71,7 @@ registered by the page's code.
 - isolvedhire (2026-11-21): asks for a phone or email verification code before the form opens. That code goes to the applicant.
 - Dover (`app.dover.io` -> `jobs.dover.com`): five fields plus resume, no account; success is a "Thanks for applying!" card.
 - Greenhouse company pages with `?gh_jid=` (Nintendo, C3, a16z, Amperity, Formlabs): use `/embed/job_app?for=<board>&token=<id>`; the board slug is usually the company name (c3iot for C3 AI). Some boards (Gusto) send an email security code after Submit.
+- Dayforce (WoodmenLife, 2026-11-21): "Apply without an Account" works. Resume import fills work history (check it for excluded employers); "Reason for leaving" is required even for a current job. The questionnaire includes a binding arbitration agreement, so stop there unless consented.
+- UKG/UltiPro, Avature, and `careers.<company>.com/jobs/<n>` sites (iCIMS behind them) all require an account.
+- Google Sheet mirror: write notes by appending to the existing cell, never replacing it. Older notes hold role research. A revision can be recovered from the sheet tab with `fetch('/spreadsheets/d/<id>/export?format=csv&gid=<gid>&revision=<rev>')` (revision ids from Drive `list_file_revisions`).
+- Duplicates: before applying, re-read the live Sheet row (status AND notes), not a queue or list cached earlier in the session. An earlier run the same day may already have submitted it.
