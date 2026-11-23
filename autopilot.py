@@ -10,6 +10,7 @@
   python3 autopilot.py track Submitted "Acme" "Software Engineer Intern" --term "Summer 2027" --note "confirmation page" --link URL
   python3 autopilot.py review export            drafts -> review-desk/drafts.json (open review-desk/index.html)
   python3 autopilot.py review import grades.json
+  python3 autopilot.py radar build --out _site  build the public Internship Radar site (see lib/radar.py)
 """
 import argparse, json, shutil, sys, pathlib
 
@@ -103,6 +104,16 @@ def cmd_review(a):
         print(review.import_grades(a.file))
 
 
+def cmd_radar(a):
+    import radar
+    if a.fetch:
+        import discover
+        discover.fetch_sources(pull=True)
+    st = radar.build(pathlib.Path(a.out), pathlib.Path(a.listings) if a.listings else None)
+    print(f"radar: {st['total']} postings from {st['companies']} companies "
+          f"({st['today']} in the last 24h, {st['week']} this week) -> {a.out}/")
+
+
 def main():
     ap = argparse.ArgumentParser(description="Internship Autopilot"); sub = ap.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("init"); s.add_argument("--force", action="store_true"); s.set_defaults(f=cmd_init)
@@ -117,6 +128,11 @@ def main():
     for k in ("term", "resume", "pay", "track", "note", "link"): s.add_argument("--" + k, default="")
     s.set_defaults(f=cmd_track)
     s = sub.add_parser("review"); s.add_argument("action", choices=["export", "import"]); s.add_argument("file", nargs="?"); s.set_defaults(f=cmd_review)
+    s = sub.add_parser("radar", help="build the public Internship Radar site")
+    s.add_argument("action", choices=["build"]); s.add_argument("--out", default="_site")
+    s.add_argument("--listings", help="path to a SimplifyJobs listings.json (default: the configured source)")
+    s.add_argument("--fetch", action="store_true", help="clone/pull the job-list sources first")
+    s.set_defaults(f=cmd_radar)
     a = ap.parse_args(); a.f(a)
 
 

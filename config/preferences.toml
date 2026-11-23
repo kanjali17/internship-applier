@@ -125,6 +125,17 @@ kind = "zapply_readme"
 repo = "https://github.com/zapplyjobs/Internships-2027"
 dir = "ext/Internships-2027"
 
+# ── Internship Radar (public board) ─────────────────────────────────────────
+# `python3 autopilot.py radar build` publishes ALL current postings (not just
+# your ranked queue) as a static site with per-role RSS feeds. A GitHub Action
+# rebuilds it every few hours and deploys it to GitHub Pages.
+[radar]
+title = "Internship Radar"
+terms = ["Summer 2027", "Fall 2027", "Spring 2027", "Winter 2027", "Summer 2028"]
+max_age_days = 120      # drop postings older than this
+feed_size = 150         # entries per RSS feed
+site_url = "https://kanjali17.github.io/internship-applier"
+
 # ── Application sites ────────────────────────────────────────────────────────
 # Sites Claude may apply on without an account. Anything else (Workday, iCIMS,
 # Taleo, SuccessFactors) is queued for you to create an account first.
