@@ -20,6 +20,8 @@ max_age_days = 30
 min_hourly_pay = 28
 # Title words that disqualify a posting outright (regex, case-insensitive).
 exclude_title = '''(?<![/\w])ms(?![/\w])|\b(phd|ph\.d|master'?s|mba|graduate student|hardware|mechanical|electrical|firmware|embedded|asic|rtl|sales|marketing|accounting|legal|nurse|clinical|supply chain|manufacturing|civil|chemical|new grad|full[- ]time|postdoc)\b'''
+# Companies never to apply to (regex, case-insensitive). Anjali 2026-11-22: never Daikin / Daikin Comfort.
+exclude_companies = '''\bdaikin\b'''
 # Countries/cities to exclude unless the listing also says US/remote-US.
 exclude_locations = '''\b(canada|toronto|vancouver|london|uk|india|singapore|germany)\b'''
 
@@ -129,8 +131,8 @@ dir = "ext/Internships-2027"
 # Sites Claude may apply on without an account. Anything else (Workday, iCIMS,
 # Taleo, SuccessFactors) is queued for you to create an account first.
 [ats]
-no_account = ["greenhouse", "ashbyhq", "lever.co", "rippling", "workable", "jobvite"]
-needs_account = ["myworkdayjobs", "icims", "taleo", "successfactors", "oraclecloud", "smartrecruiters"]
+no_account = ["greenhouse", "ashbyhq", "lever.co", "rippling", "workable", "jobvite", "smartrecruiters"]
+needs_account = ["myworkdayjobs", "icims", "taleo", "successfactors", "oraclecloud", "ultipro", "avature"]
 
 # ── Tracker ──────────────────────────────────────────────────────────────────
 [tracker]

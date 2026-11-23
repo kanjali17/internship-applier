@@ -68,6 +68,8 @@ def score(x, age_days):
     tl, cl, ll = x["title"].lower(), x["company"].lower(), " ".join(x["locations"]).lower()
     if re.search(S["exclude_title"], tl):
         return None, None, "excluded title"
+    if S.get("exclude_companies") and re.search(S["exclude_companies"], cl):
+        return None, None, "excluded company"
     if S.get("exclude_locations") and re.search(S["exclude_locations"], ll) and not re.search(r"\b(us|usa|united states|remote)\b", ll):
         return None, None, "location"
     track, s = None, 0
