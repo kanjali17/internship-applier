@@ -17,7 +17,7 @@ degree = "Bachelor's"
 # Ignore postings older than this many days.
 max_age_days = 30
 # Skip roles whose listed pay is below this (USD/hour). 0 = no floor.
-min_hourly_pay = 28
+min_hourly_pay = 31  # Anjali 2026-11-22: never apply under $31/hr
 # Title words that disqualify a posting outright (regex, case-insensitive).
 exclude_title = '''(?<![/\w])ms(?![/\w])|\b(phd|ph\.d|master'?s|mba|graduate student|hardware|mechanical|electrical|firmware|embedded|asic|rtl|sales|marketing|accounting|legal|nurse|clinical|supply chain|manufacturing|civil|chemical|new grad|full[- ]time|postdoc)\b'''
 # Companies never to apply to (regex, case-insensitive). Anjali 2026-11-22: never Daikin / Daikin Comfort.

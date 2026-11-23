@@ -18,6 +18,14 @@ they replace the shared files. Never commit anything in `data/`, `resumes/`, `pa
 If `data/profile.json` is missing, run `python3 autopilot.py init` and help the applicant fill it in
 by asking questions. Run `python3 autopilot.py doctor` and fix what it reports before applying.
 
+## Standing rules from Anjali (2026-11-22)
+
+- Never apply to any job paying under $31/hour (about $5,370/month). Unlisted pay only at companies known to pay interns $31+/hr.
+- Never apply to Daikin or Daikin Comfort, in any form.
+- Focus on roles in California (especially the SF Bay Area) and New York.
+- "Outstanding offers?" questions: answer Yes and, where there's a details box, write "I have a Summer 2027 software engineering internship offer from Hudl and remain very interested in <Company>." Never say the offer was accepted.
+- SmartRecruiters Easy Apply needs no account.
+
 ## The loop
 
 ```
