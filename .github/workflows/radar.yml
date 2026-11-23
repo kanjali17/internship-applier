@@ -1,0 +1,42 @@
+# Rebuilds the public Internship Radar from the latest job lists and publishes
+# it to the gh-pages branch, which GitHub Pages serves.
+name: radar
+
+on:
+  schedule:
+    - cron: "17 */3 * * *"   # every 3 hours
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["lib/radar.py", "radar/**", "config/preferences.toml", ".github/workflows/radar.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: radar
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test
+        run: python3 tests/run.py
+      - name: Build site
+        run: python3 autopilot.py radar build --fetch --out _site
+      - name: Publish to gh-pages
+        run: |
+          cd _site
+          git init -q -b gh-pages
+          git config user.name "radar-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Radar update $(date -u +%Y-%m-%dT%H:%MZ)"
+          # A fresh single-commit branch each run: the site is fully regenerated,
+          # so there's no history worth keeping and the branch stays small.
+          git push -q --force "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" gh-pages

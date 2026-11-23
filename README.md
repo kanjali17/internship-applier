@@ -20,6 +20,30 @@ flowchart LR
   H --> A
 ```
 
+## Internship Radar: the public board
+
+**[kanjali17.github.io/internship-applier](https://kanjali17.github.io/internship-applier)**
+
+The autopilot ranks postings for one person. The Radar publishes *every* current posting as a
+free, fast board anyone can use, with no account and no server:
+
+- Filter by role (AI/ML, software, data, product, quant, hardware), term, location and how
+  recently it was posted; filters live in the URL, so a view can be shared.
+- See what's **new since your last visit**, mark postings **applied** or hide them. Those marks
+  live only in your browser.
+- Subscribe to an **RSS/Atom feed per role** to get new postings in any feed reader.
+
+![Internship Radar](docs/radar.png)
+
+A scheduled GitHub Action (`.github/workflows/radar.yml`) rebuilds it every 3 hours from the
+SimplifyJobs list and publishes it to the `gh-pages` branch. Roles are inferred from titles
+first and the source's category second, because the source files "Data Analyst" and "ML
+Engineer" under the same category. Build it locally with:
+
+```bash
+python3 autopilot.py radar build --fetch --out _site && open _site/index.html
+```
+
 ## What's in the box
 
 | Piece | File | What it does |
@@ -36,6 +60,7 @@ flowchart LR
 | Packets | `autopilot.py new / check` | One file per job: every answer, its source, the resume, essays, READY or BLOCKED |
 | Review desk | `review-desk/index.html` | Grade each draft 1 to 5, approve or ask for a rewrite; runs offline in your browser |
 | Tracker | `autopilot.py track` | `data/tracker.xlsx` with a status dropdown; can mirror to a Google Sheet |
+| Radar | `autopilot.py radar build` | Public board + per-role RSS feeds of every current posting, rebuilt every 3h by GitHub Actions |
 | Inbox sync | `docs/INBOX_SYNC.md` | A daily task that reads replies and updates your tracker |
 | Site notes | `docs/SITE_NOTES.md` | How Greenhouse, Ashby, Lever, Rippling and Workday forms really behave |
 

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{TITLE}}</title>
+<meta name="description" content="Every open internship posting, updated every few hours. Filter by role, term, location and freshness; see what's new since your last visit.">
+<link rel="alternate" type="application/atom+xml" title="All new internships" href="feed.xml">
+<style>
+:root{--bg:#f7f6f3;--card:#fff;--fg:#1c1b19;--mut:#6d6a64;--line:#e4e1da;--acc:#c2410c;--accb:#fff1e8;--ok:#15803d;--okb:#e8f5ec;--new:#1d4ed8;--newb:#e8efff}
+@media (prefers-color-scheme:dark){:root{--bg:#121211;--card:#1b1a19;--fg:#ecebe7;--mut:#9c9992;--line:#2d2b29;--acc:#fb923c;--accb:#3a2414;--ok:#4ade80;--okb:#14301f;--new:#93b4ff;--newb:#1a2440}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{padding:32px 0 8px}
+h1{font-size:28px;letter-spacing:-.02em;margin:0}
+h1 span{color:var(--acc)}
+.sub{color:var(--mut);margin-top:4px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr) 2fr;gap:10px;margin:20px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat b{display:block;font-size:24px;letter-spacing:-.02em}
+.stat small{color:var(--mut)}
+.spark svg{width:100%;height:46px;display:block}
+.controls{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center;border-bottom:1px solid var(--line)}
+input[type=search],select{font:inherit;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:9px;padding:8px 10px}
+input[type=search]{flex:1;min-width:200px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:5px 12px;font-size:13.5px;cursor:pointer;user-select:none}
+.chip[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.chip .n{opacity:.6;margin-left:4px;font-variant-numeric:tabular-nums}
+.meta{display:flex;justify-content:space-between;align-items:center;color:var(--mut);font-size:13.5px;margin:10px 0}
+.meta button,.more{font:inherit;background:none;border:1px solid var(--line);border-radius:8px;padding:4px 10px;color:inherit;cursor:pointer}
+ul.list{list-style:none;margin:0;padding:0}
+.row{display:grid;grid-template-columns:1fr auto;gap:4px 14px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+.row.applied{opacity:.55}
+.co{font-weight:650}
+.title a{text-decoration:none}.title a:hover{text-decoration:underline}
+.tags{display:flex;flex-wrap:wrap;gap:6px;color:var(--mut);font-size:13px;grid-column:1}
+.tag{border:1px solid var(--line);border-radius:6px;padding:0 6px}
+.badge{font-size:11.5px;font-weight:700;border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:1px}
+.b-new{background:var(--newb);color:var(--new)}.b-fresh{background:var(--accb);color:var(--acc)}.b-applied{background:var(--okb);color:var(--ok)}
+.side{grid-column:2;grid-row:1/span 3;display:flex;flex-direction:column;align-items:flex-end;gap:6px;justify-content:space-between}
+.age{color:var(--mut);font-size:13px;white-space:nowrap}
+.acts{display:flex;gap:6px}
+.act{font:inherit;font-size:12.5px;border:1px solid var(--line);background:none;color:inherit;border-radius:7px;padding:3px 8px;cursor:pointer}
+.act.apply{background:var(--fg);color:var(--bg);border-color:var(--fg);text-decoration:none}
+.empty{color:var(--mut);text-align:center;padding:40px 0}
+.more{display:block;margin:16px auto 40px;padding:8px 18px}
+footer{color:var(--mut);font-size:13px;border-top:1px solid var(--line);padding:18px 0 40px}
+footer a{color:var(--mut)}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.spark{grid-column:1/-1}.row{grid-template-columns:1fr}.side{grid-column:1;grid-row:auto;flex-direction:row;align-items:center}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Internship <span>Radar</span></h1>
+  <div class="sub">Every open internship posting, refreshed every few hours. Updated {{GENERATED}}.</div>
+</header>
+
+<section class="stats" id="stats"></section>
+
+<div class="controls">
+  <input type="search" id="q" placeholder="Search company, title or city…" autocomplete="off">
+  <select id="term" aria-label="Term"></select>
+  <select id="age" aria-label="Posted within">
+    <option value="1">Last 24 hours</option><option value="3">Last 3 days</option><option value="7">Last 7 days</option>
+    <option value="30" selected>Last 30 days</option><option value="9999">Any time</option>
+  </select>
+  <select id="where" aria-label="Location">
+    <option value="">Anywhere</option><option value="us">United States</option><option value="remote">Remote</option><option value="intl">Outside the US</option>
+  </select>
+  <select id="show" aria-label="Show">
+    <option value="">All postings</option><option value="new">New since last visit</option><option value="todo">Hide applied</option><option value="applied">Applied only</option>
+  </select>
+</div>
+<div class="chips" id="roles"></div>
+<div class="meta"><span id="count"></span><span><a id="feed" href="feed.xml">RSS feed for this role</a></span></div>
+<ul class="list" id="list"></ul>
+<button class="more" id="more" hidden>Show more</button>
+
+<footer>
+  Data from <a href="https://github.com/SimplifyJobs/Summer2027-Internships">SimplifyJobs</a>' public internship list, rebuilt by a scheduled GitHub Action.
+  "Applied" marks are stored only in your browser. Subscribe to new postings for any role with its RSS feed.
+  Built with <a href="https://github.com/kanjali17/internship-applier">internship-applier</a>.
+</footer>
+</div>
+
+<script id="data" type="application/json">{{DATA}}</script>
+<script>
+"use strict";
+const D = JSON.parse(document.getElementById("data").textContent);
+const NOW = Date.now() / 1000, DAY = 86400, PAGE = 60;
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+// Browser storage can be unavailable (private mode, blocked cookies); the board still works without it.
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+const lastVisit = store.get("radar:lastVisit", 0);
+const applied = new Set(store.get("radar:applied", []));
+const hidden = new Set(store.get("radar:hidden", []));
+window.addEventListener("pagehide", () => store.set("radar:lastVisit", D.generated));
+
+const state = Object.assign({ q: "", role: "", term: "", age: "30", where: "", show: "" },
+  Object.fromEntries(new URLSearchParams(location.search)));
+let limit = PAGE;
+
+function ago(t) {
+  const s = NOW - t;
+  if (s < 3600) return Math.max(1, Math.round(s / 60)) + "m ago";
+  if (s < DAY) return Math.round(s / 3600) + "h ago";
+  const d = Math.round(s / DAY);
+  return d === 1 ? "1 day ago" : d + " days ago";
+}
+
+function renderStats() {
+  const s = D.stats, max = Math.max(1, ...s.per_day), w = 300, h = 46, bw = w / s.per_day.length;
+  const bars = s.per_day.map((n, i) => `<rect x="${i * bw + 1}" y="${h - (n / max) * (h - 2)}" width="${bw - 2}" height="${(n / max) * (h - 2)}" rx="1.5" fill="${i === s.per_day.length - 1 ? "var(--acc)" : "var(--line)"}"><title>${n} posted ${s.per_day.length - 1 - i} day(s) ago</title></rect>`).join("");
+  const top = s.top_week.slice(0, 3).map(([c, n]) => `${esc(c)} (${n})`).join(", ");
+  $("stats").innerHTML = `
+    <div class="stat"><b>${s.today.toLocaleString()}</b><small>posted in the last 24h</small></div>
+    <div class="stat"><b>${s.week.toLocaleString()}</b><small>this week</small></div>
+    <div class="stat"><b>${s.total.toLocaleString()}</b><small>open postings</small></div>
+    <div class="stat"><b>${s.companies.toLocaleString()}</b><small>companies</small></div>
+    <div class="stat spark"><svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="Postings per day, last 30 days">${bars}</svg>
+      <small>Postings per day, last 30 days${top ? ` · hiring most this week: ${top}` : ""}</small></div>`;
+}
+
+function renderControls() {
+  $("term").innerHTML = `<option value="">All terms</option>` + D.terms.map(t => `<option>${esc(t)}</option>`).join("");
+  for (const id of ["q", "term", "age", "where", "show"]) {
+    $(id).value = state[id];
+    $(id).addEventListener("input", () => { state[id] = $(id).value; limit = PAGE; update(); });
+  }
+  $("more").addEventListener("click", () => { limit += PAGE; render(); });
+}
+
+function matches(p, ignoreRole) {
+  if (!ignoreRole && state.role && p.role !== state.role) return false;
+  if (state.term && !p.terms.includes(state.term)) return false;
+  if (NOW - p.posted > Number(state.age) * DAY) return false;
+  if (state.where && !p.region.includes(state.where)) return false;
+  if (hidden.has(p.id)) return false;
+  if (state.show === "new" && p.posted <= lastVisit) return false;
+  if (state.show === "todo" && applied.has(p.id)) return false;
+  if (state.show === "applied" && !applied.has(p.id)) return false;
+  if (state.q) {
+    const hay = (p.company + " " + p.title + " " + p.locations.join(" ")).toLowerCase();
+    if (!state.q.toLowerCase().split(/\s+/).every(w => hay.includes(w))) return false;
+  }
+  return true;
+}
+
+function renderRoles() {
+  const counts = {};
+  for (const p of D.postings) if (matches(p, true)) counts[p.role] = (counts[p.role] || 0) + 1;
+  const total = Object.values(counts).reduce((a, b) => a + b, 0);
+  const keys = Object.keys(D.roles).filter(k => counts[k]);
+  $("roles").innerHTML = [["", "All roles", total], ...keys.map(k => [k, D.roles[k], counts[k]])]
+    .map(([k, label, n]) => `<button class="chip" data-role="${k}" aria-pressed="${state.role === k}">${esc(label)}<span class="n">${(n || 0).toLocaleString()}</span></button>`).join("");
+  $("roles").querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => { state.role = b.dataset.role; limit = PAGE; update(); }));
+  $("feed").href = state.role ? `feed-${state.role}.xml` : "feed.xml";
+  $("feed").textContent = state.role ? `RSS feed: ${D.roles[state.role]}` : "RSS feed: all roles";
+}
+
+let filtered = [];
+function render() {
+  const list = filtered.slice(0, limit);
+  $("count").textContent = `${filtered.length.toLocaleString()} posting${filtered.length === 1 ? "" : "s"}`;
+  $("list").innerHTML = list.length ? list.map(p => {
+    const isNew = lastVisit && p.posted > lastVisit, fresh = NOW - p.posted < DAY, done = applied.has(p.id);
+    const badge = done ? `<span class="badge b-applied">Applied</span>` : isNew ? `<span class="badge b-new">New</span>` : fresh ? `<span class="badge b-fresh">Today</span>` : "";
+    const locs = p.locations.length > 3 ? p.locations.slice(0, 3).join(" · ") + ` +${p.locations.length - 3}` : p.locations.join(" · ");
+    return `<li class="row${done ? " applied" : ""}" data-id="${esc(p.id)}">
+      <div><span class="co">${esc(p.company)}</span>${badge}</div>
+      <div class="title"><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title)}</a></div>
+      <div class="tags"><span>${esc(locs || "Location not listed")}</span><span class="tag">${esc(p.terms.join(", "))}</span><span class="tag">${esc(D.roles[p.role])}</span>${p.ats ? `<span class="tag">${esc(p.ats)}</span>` : ""}</div>
+      <div class="side"><span class="age">${ago(p.posted)}</span>
+        <span class="acts"><button class="act" data-act="hide" title="Hide this posting">Hide</button>
+        <button class="act" data-act="applied">${done ? "Undo" : "Mark applied"}</button>
+        <a class="act apply" href="${esc(p.url)}" target="_blank" rel="noopener">Apply</a></span></div>
+    </li>`;
+  }).join("") : `<li class="empty">No postings match these filters.</li>`;
+  $("more").hidden = filtered.length <= limit;
+}
+
+$("list").addEventListener("click", e => {
+  const btn = e.target.closest("button.act");
+  if (!btn) return;
+  const id = btn.closest(".row").dataset.id;
+  if (btn.dataset.act === "applied") { applied.has(id) ? applied.delete(id) : applied.add(id); store.set("radar:applied", [...applied]); }
+  if (btn.dataset.act === "hide") { hidden.add(id); store.set("radar:hidden", [...hidden]); }
+  update();
+});
+
+function update() {
+  filtered = D.postings.filter(p => matches(p, false));
+  renderRoles();
+  render();
+  const params = new URLSearchParams(Object.entries(state).filter(([k, v]) => v && !(k === "age" && v === "30")));
+  history.replaceState(null, "", params.toString() ? "?" + params : location.pathname);
+}
+
+renderStats();
+renderControls();
+update();
+</script>
+</body>
+</html>
