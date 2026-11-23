@@ -71,3 +71,9 @@ registered by the page's code.
 - **Resume upload:** the file input is in shadow DOM, so `file_upload` can't target it. Add a temporary light-DOM `<input type=file>` with a `change` listener that copies its files (via `DataTransfer`) into `spl-dropzone-file-input-1` and dispatches `change`; upload to the proxy with `file_upload`, then remove it.
 - City / State / select questions are autocompletes: click the field, type, click the option. State lists may use two-letter codes ("TX" not "Texas").
 - `spl-radio` buttons register with a JS `.click()` on the element; confirm with a screenshot.
+
+### Faster Greenhouse react-select filling — learned 2026-11-23
+- No coordinates needed: in JS, `scrollIntoView({block:'center'})` then `.focus()` the select's input by id, then send the keys with `computer type` (text) + `Return`. Works for country, location, school, degree, discipline, month, custom and EEO selects.
+- When typed text gives "No options", the option labels differ by posting (e.g. GPA "3.6 - 4.0" vs "3.7 - 4.0"). Press Down to open the list, screenshot, and click the right one.
+- Some Greenhouse "State"/"Country" custom questions are selects, not text. A value set by script shows up but doesn't register. Select it.
+- Direct board scans find roles the lists miss: `boards-api.greenhouse.io/v1/boards/<slug>/jobs` (from that origin), `api.ashbyhq.com/posting-api/job-board/<slug>` (fetch from the api.ashbyhq.com origin; CORS blocks other origins), `api.lever.co/v0/postings/<slug>?mode=json`.
