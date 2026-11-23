@@ -64,3 +64,10 @@ registered by the page's code.
 
 ## Learned in use
 (Claude appends new quirks here after each session.)
+
+### SmartRecruiters (`jobs.smartrecruiters.com`) — learned 2026-11-23
+- "I'm interested" opens `oneclick-ui` Easy Apply: **no account needed**. Page 1 = personal info, optional Experience/Education, profiles, resume, optional message. Page 2 = "Preliminary questions", then Submit. Success URL ends in `/success` ("Application submitted!").
+- Everything is inside nested shadow DOM: `read_page`/`find` can't see inputs. Walk `shadowRoot`s in JS. Text inputs: `HTMLInputElement.prototype` value setter + `input`/`change` events (composed).
+- **Resume upload:** the file input is in shadow DOM, so `file_upload` can't target it. Add a temporary light-DOM `<input type=file>` with a `change` listener that copies its files (via `DataTransfer`) into `spl-dropzone-file-input-1` and dispatches `change`; upload to the proxy with `file_upload`, then remove it.
+- City / State / select questions are autocompletes: click the field, type, click the option. State lists may use two-letter codes ("TX" not "Texas").
+- `spl-radio` buttons register with a JS `.click()` on the element; confirm with a screenshot.
