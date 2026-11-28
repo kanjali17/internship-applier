@@ -64,3 +64,8 @@ registered by the page's code.
 
 ## Learned in use
 (Claude appends new quirks here after each session.)
+
+### Learned in use (2026-11-28)
+- Greenhouse `studentprogram` (Esri): Discipline list has no Data Science; nearest is "Statistics & Decision Theory". Live form adds Location (City), education block and required EEO fields not in the API.
+- Illumio (Ashby): every intern form has a required binding Arbitration Acknowledgment, so it pauses unless arbitration is consented for Illumio.
+- `discover` missed an already-submitted Octaura row (tracker row 325): always grep the tracker by company before `track`, since `track` overwrites the matching row.
